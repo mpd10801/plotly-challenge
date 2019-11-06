@@ -4,16 +4,14 @@ function buildMetadata(sample) {
     
   // Use `d3.json` to fetch the metadata for a sample
     // Use d3 to select the panel with id of `#sample-metadata`
-    var bacteria = d3.select("#sample-metadata");
+    var panel = d3.select("#sample-metadata");
     // Use `.html("") to clear any existing metadata
+    panel.html("");
 
     // Use `Object.entries` to add each key and value pair to the panel
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
-    Object.entries(data).forEach(([key, value]) => {bacteria.append("h6").text(`${key}: ${value}`);});
-    // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
-    // skip that shizz
+    // Hint: Inside the loop, you will need to use d3 to append new tags for each key-value in the metadata.
+    Object.entries(data).forEach(([key, value]) => {panel.append("h6").text(`${key}: ${value}`);
+    });
   });
 }
 
@@ -25,33 +23,39 @@ function buildCharts(sample) {
     const sample_values = data.sample_values;
 
 // @TODO: Build a Bubble Chart using the sample data
-var data_bubble = [{
-    x: otu_ids,
-    y: sample_values,
-    text: otu_labels,
-    mode: "markers",
-    marker: {size: sample_values, color: otu_ids,}
-  }];
+    var data_bubble = [
+      {
+        x: otu_ids,
+        y: sample_values,
+        text: otu_labels,
+        mode: "markers",
+          marker: {size: sample_values, color: otu_ids
+          }
+        }
+      ];
   
-  var layout_bubble = {
-    xaxis: { title: "OTU ID"}};
+      var layout_bubble = {
+        xaxis: {title: "OTU ID"}
+      };
   
-  Plotly.plot("bubble", data_bubble, layout_bubble);
+    Plotly.plot("bubble", data_bubble, layout_bubble);
 
 // @TODO: Build a Pie Chart
 // HINT: You will need to use slice() to grab the top 10 sample_values,
 // otu_ids, and labels (10 each).
-var data_pie = [{
-  type: "pie"
-  values: sample_values.slice(0, 10),
-  labels: otu_ids.slice(0, 10),
-  }];
+    var data_pie = [
+      {
+        type: "pie"
+        values: sample_values.slice(0, 10),
+        labels: otu_ids.slice(0, 10)
+      }
+    ];
 
-var layout_pie = {
-  title: "Chart",
-}; 
+    var layout_pie = {
+      margin: { t: 0, l: 0 }
+    };
 
-Plotly.plot("pie", data_pie, layout_pie);
+    Plotly.plot("pie", data_pie, layout_pie);
   });
 }
 
